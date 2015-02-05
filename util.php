@@ -1,31 +1,7 @@
 <?php
 
-/** @mainpage
- * Yahoo!ショッピングWeb APISDK共通関数
- */
-
-/**
- * @file
- * @brief Yahoo!ショッピングWeb APISDK共通関数
- *
- * Yahoo!ショッピングWeb APISDKで、共通で使用する設定・関数を集めたファイルです。
- *
- * PHP version 5
- *
- */
-
-/**
- * @brief アプリケーションID
- * 
- * Yahoo! JAPANが提供するWeb APIを利用するアプリケーションには、アプリケーションIDが必要です。
- * Yahoo!デベロッパーネットワークで取得したアプリケーションIDを設定してください。
- * アプリケーションIDの取得については
- * http://e.developer.yahoo.co.jp/webservices/register_application
- * をご覧ください。
- * 
- * @var string
- */
-$appid = "あなたのアプリケーションID";//取得したアプリケーションIDを設定
+/* The ID to use yahoo's API*/
+appid = "dj0zaiZpPU1NOEE5dG9VcjBFSSZzPWNvbnN1bWVyc2VjcmV0Jng9NmE-"
 
 /**
  * @brief カテゴリーID一覧
