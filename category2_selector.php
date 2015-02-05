@@ -19,8 +19,8 @@ function get_child_category_list($category_id = 1){
 }
 
 
-if(isset($_GET["category_id"])){
-	$category1 = $_GET["category_id"];
+if(isset($_POST["category_id"])){
+	$category1 = $_POST["category_id"];
 	$top_category = get_child_category_list();
 	$category2_list = $top_category[$category1];
 
