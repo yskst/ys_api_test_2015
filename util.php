@@ -1,7 +1,7 @@
 <?php
 
 /* The ID to use yahoo's API*/
-appid = "dj0zaiZpPU1NOEE5dG9VcjBFSSZzPWNvbnN1bWVyc2VjcmV0Jng9NmE-"
+$appid = "dj0zaiZpPU1NOEE5dG9VcjBFSSZzPWNvbnN1bWVyc2VjcmV0Jng9NmE-";
 
 /**
  * @brief カテゴリーID一覧
