@@ -30,5 +30,60 @@ echo "</select>";
 <input type="submit" value="検索">
 </form>
 
+<H1>検索結果</H1>
+<?php
+require_once("util.php");
+function sort2name($sort_type){
+  if($sort_type == "price") return "価格";
+  else if($sort_type == "score") return "評価";
+  else if($sort_type == "sold" ) return "売れ筋";
+  else if($sort_type == "review_count") return "評価";
+  else return "その他";
+}
+
+function order2name($order_type){
+  if($order_type == "+") return "昇順";
+  else return "降順";
+}
+
+function search_item($query, $category_id, $sort){
+  global $appid;
+  $url = "http://shopping.yahooapis.jp/ShoppingWebService/V1/itemSearch";
+  $c   = rawurlencode($category_id);
+  $s   = rawurlencode($sort);
+  
+  $url = "$url?appid=$appid&query=$query&category_id=$c&sort=$s&hits=5";
+  $xml = simplexml_load_file($url);
+  return $xml; 
+}
+
+function show_search_result($xml){
+  if($xml["totalResultsReturned"] == 0) return;
+  
+  $res = $xml->Result->Hit;
+  foreach($res as $hit){
+    echo '<div class="Item">';
+    echo '<h3><a href="' .h($hit->Url). '">' .h($hit->Name). ',' .h($hit->Price). '円</a></h3>';
+    echo '</div>';
+  }
+}
+
+if(isset($_GET["query"])){
+  $query = $_GET["query"];
+  $category =$_GET["category_id"];
+  $orders = array("+", "-");
+  $sorts  = array("price", "score", "sold", "review_count");
+
+  foreach($sorts as $s){
+    foreach($orders as $o){
+      echo "<H2>". sort2name($s) . order2name($o) . "</H2>\n";
+      $res = search_item($query, $category, $o.$s);
+      show_search_result($res);
+    }
+  }
+
+}
+?>
+
 </body>
 </html>
