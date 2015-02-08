@@ -10,16 +10,16 @@
 <form action=<?php echo $_SERVER['PHP_SELF']?> method="post">
 <?php
 
-echo "<input type=\"text\" value=$query name=\"query\"><br>"
+echo "<input type=\"text\" value=\"". $_POST["query"] ."\"name=\"query\"><br>\n";
 
 require_once('./category_selector.php');
 $top_category = get_child_category_list();
 
 echo '<select name="category_id">';
 foreach ($top_category as $category){
-  if ($category_id == $category->Id) $s="selected";
+  if ($_POST["category_id"] == intval($category->Id)) $s="selected\n";
   else $s = "";
-  echo "<option value=\"$category->Id\" $selected>". $category->Title->Short ."</option>";
+  echo "<option value=\"$category->Id\" $s>". $category->Title->Short ."</option>\n";
 }
 echo "</select>";
 ?>
