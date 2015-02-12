@@ -16,7 +16,7 @@ class YsApiController extends AppController{
     return $category_list;
   }
 
-  private function __GetRank($sortid){
+  private function __GetRank($query, $category_id, $sortid){
     $url = "http://shopping.yahooapis.jp/ShoppingWebService/V1/itemSearch";
     $c = rawurlencode($category_id);
     $s = rawurlencode($sortid);
@@ -25,18 +25,21 @@ class YsApiController extends AppController{
     return $xml; 
   }
 
-  private function sort2name($sotr_type){
-    if($sort_type == "price") return "価格";
-    else if($sort_type == "score") return "評価";
-    else if($sort_type == "sold" ) return "売れ筋";
-    else if($sort_type == "review_count") return "評価";
-    else return "その他";
+  private $sorts = array("price" => "価格",
+                        "score" => "評価",
+                        "sold"  => "売れ筋",
+                        "review_count" => "評価"); 
+  private $orders = array("+" => "昇順",
+                          "-" =>  "降順");
+
+  private CreateSortParam($sort, $order){
+    if(!array_key_exists($sort,$sorts) || 
+        !array_key_exists($order,$orders)){
+      throw BadRequestException;
+    }
+    return $order.$sort;
   }
 
-  private function order2name($order_type){
-    if($order_type == "+") return "昇順";
-    else return "降順";
-  }
 
   public function index(){
     $this->modelClass = null;
@@ -46,6 +49,13 @@ class YsApiController extends AppController{
     $this->set("category_list", $category_id);
 
     // Get result of search.
+    if(isset($this->data["query"] && isset($this->data["category"]))){
+      foreach($orders as $otype => $oname){
+        foreach($sorts as $stype => $sname){
+          $sort_type = CreateSortParam($stype, $otype)
+        }
+      }
+    }
   }
 }
 ?>
