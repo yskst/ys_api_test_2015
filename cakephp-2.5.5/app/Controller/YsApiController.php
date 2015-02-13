@@ -32,7 +32,7 @@ class YsApiController extends AppController{
   private $orders = array("+" => "昇順",
                           "-" =>  "降順");
 
-  private CreateSortParam($sort, $order){
+  private function CreateSortParam($sort, $order){
     if(!array_key_exists($sort,$sorts) || 
         !array_key_exists($order,$orders)){
       throw BadRequestException;
@@ -49,10 +49,10 @@ class YsApiController extends AppController{
     $this->set("category_list", $category_id);
 
     // Get result of search.
-    if(isset($this->data["query"] && isset($this->data["category"]))){
+    if(isset($this->data["query"]) && isset($this->data["category"])){
       foreach($orders as $otype => $oname){
         foreach($sorts as $stype => $sname){
-          $sort_type = CreateSortParam($stype, $otype)
+          $sort_type = CreateSortParam($stype, $otype);
         }
       }
     }
