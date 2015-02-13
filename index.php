@@ -7,29 +7,35 @@
 <body>
 <h1>The test of yahoo API.</h1>
 
+
+<!-- Search window -->
 <form action=<?php echo $_SERVER['PHP_SELF']?> method="get">
+
+<input type="text" value=<?php$_GET["query"]?> name="query"> <br>
+
+<select name="category_id">;
+<option value=1>すべてのカテゴリ</option>
+
 <?php
-
-echo "<input type=\"text\" value=\"". $_GET["query"] ."\"name=\"query\"><br>\n";
-
 require_once('./category_selector.php');
 $top_category = get_child_category_list();
 
-echo '<select name="category_id">';
-
 if(isset($_GET["category_id"])) $s = "selected";
 else $s="";
-echo '<option value=1>すべてのカテゴリ</option>';
+
 foreach ($top_category as $category){
-  if ($_GET["category_id"] == intval($category->Id)) $s="selected";
+  if ($_GET["category_id"] == $category->Id) $s="selected";
   else $s = "";
   echo "<option value=\"$category->Id\" $s>". $category->Title->Short ."</option>\n";
 }
-echo "</select>";
 ?>
+
+</select>
 <input type="submit" value="検索">
 </form>
 
+
+<!-- The result of searching. -->
 <H1>検索結果</H1>
 <?php
 require_once("util.php");
