@@ -13,15 +13,21 @@ echo $this->form->end("検索");
 <h1>検索結果</h1>
 <?php 
 if(isset($results)){
+  $table_header = $this->Html->tableHeaders(array());
+  $cell_data = array();
   foreach($results as $res){ 
-    echo "<p>";
-    echo $this->Html->link(
+    $fig = $this->Html->link(
       $this->Html->image($res["Image"]["Small"],array('fullBase'=>true)),
       $res["Url"], array('escape'=>false));
-    echo $this->Html->link($res["Name"]."<br>".$res["Store"]["Name"],
-                               $res["Url"], array('escape'=>false));
-    echo "</p>";
+    $product_name =  $this->Html->link($res["Name"]."<br>",
+      $res["Url"], array('escape'=>false));
+    $store_name = $res["Store"]["Name"];
+    $price = "&yen".$res["Price"]["@"];
+  
+    $cell_data[] = array($fig, $product_name . $store_name, $price);
   }
+  $cell_array = $this->Html->tableCells($cell_data);
+  echo $this->Html->tag('table', $table_header.$cell_array);
 }
 ?>
 
